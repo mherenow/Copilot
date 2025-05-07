@@ -1,6 +1,6 @@
 import requests
 import json
-from config import (
+from .config import (
     get_headers,
     API_BASE_URL,
     DEFAULT_MODEL,
