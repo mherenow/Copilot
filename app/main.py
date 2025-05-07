@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from client import chat_with_groq, save_conversation, load_conversation
-from config import HOST, PORT, DEBUG, CONVERSATIONS_DIR
+from .client import chat_with_groq, save_conversation, load_conversation
+from .config import HOST, PORT, DEBUG, CONVERSATIONS_DIR
 from typing import Optional, Dict, Any
 import os
 import json
