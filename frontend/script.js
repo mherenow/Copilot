@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const API_URL = window.location.hostname === 'localhost' ? 
                 'http://localhost:8000' : 
-                'https://coding-copilot-api.onrender.com';
+                'https://coding-copilot.onrender.com';
 
             const response = await fetch(`${API_URL}/chat`, {
                 method: 'POST',
