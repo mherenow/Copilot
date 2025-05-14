@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coding Copilot</title>
+    <!-- Add marked.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         :root {
             --bg-primary: #1a1a1a;
@@ -222,6 +224,71 @@
             .message {
                 max-width: 70%;
             }
+        }
+
+        /* Add styles for markdown elements */
+        .message-content h1, .message-content h2, .message-content h3, 
+        .message-content h4, .message-content h5, .message-content h6 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .message-content h1 { font-size: 1.8em; }
+        .message-content h2 { font-size: 1.6em; }
+        .message-content h3 { font-size: 1.4em; }
+        .message-content h4 { font-size: 1.2em; }
+        
+        .message-content ul, .message-content ol {
+            margin-left: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .message-content p {
+            margin-bottom: 10px;
+        }
+        
+        .message-content strong {
+            font-weight: bold;
+        }
+        
+        .message-content em {
+            font-style: italic;
+        }
+        
+        .message-content blockquote {
+            border-left: 4px solid var(--accent-primary);
+            padding-left: 15px;
+            margin: 10px 0;
+            color: var(--text-secondary);
+        }
+        
+        .message-content a {
+            color: var(--accent-primary);
+            text-decoration: underline;
+        }
+        
+        .message-content img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .message-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .message-content th, .message-content td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .message-content th {
+            background-color: var(--bg-primary);
         }
     </style>
 </head>

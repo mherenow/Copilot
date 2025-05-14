@@ -4,6 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatMessages = document.getElementById('chat-messages');
     const typingIndicator = document.getElementById('typing-indicator');
     
+    // Configure marked.js options
+    marked.setOptions({
+        breaks: true,  // Convert newlines to <br>
+        gfm: true,     // GitHub flavored markdown
+        sanitize: false // Allow HTML
+    });
+    
     // Store conversation ID and message history in session storage
     let conversationId = sessionStorage.getItem('conversationId') || null;
     
@@ -102,24 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';
 
-        // Format code blocks if present
-        if (content.includes('```')) {
-            let formattedContent = '';
-            const parts = content.split('```');
-            
-            parts.forEach((part, index) => {
-                if (index % 2 === 0) {
-                    // Regular text - convert newlines to <br> tags
-                    formattedContent += part.replace(/\n/g, '<br>');
-                } else {
-                    // Code block
-                    formattedContent += `<pre><code>${part}</code></pre>`;
-                }
-            });
-            
-            messageContent.innerHTML = formattedContent;
+        if (sender === 'bot') {
+            // For bot messages, use marked.js to render markdown
+            messageContent.innerHTML = marked.parse(content);
         } else {
-            // For regular text, preserve line breaks
+            // For user messages, just preserve line breaks
             messageContent.innerHTML = content.replace(/\n/g, '<br>');
         }
 
@@ -166,21 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const messageContent = document.createElement('div');
                 messageContent.className = 'message-content';
                 
-                // Handle possible code blocks in saved messages
-                if (msg.content.includes('```')) {
-                    let formattedContent = '';
-                    const parts = msg.content.split('```');
-                    
-                    parts.forEach((part, index) => {
-                        if (index % 2 === 0) {
-                            formattedContent += part.replace(/\n/g, '<br>');
-                        } else {
-                            formattedContent += `<pre><code>${part}</code></pre>`;
-                        }
-                    });
-                    
-                    messageContent.innerHTML = formattedContent;
+                if (msg.sender === 'bot') {
+                    // Use marked.js for bot messages
+                    messageContent.innerHTML = marked.parse(msg.content);
                 } else {
+                    // For user messages, just preserve line breaks
                     messageContent.innerHTML = msg.content.replace(/\n/g, '<br>');
                 }
 
@@ -203,22 +187,38 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Add button to clear chat history
     const chatHeader = document.querySelector('.chat-header');
+
+    // Create a container div for the title and button
+    const headerContainer = document.createElement('div');
+    headerContainer.style.display = 'flex';
+    headerContainer.style.justifyContent = 'space-between';
+    headerContainer.style.alignItems = 'center';
+
+    // Move the existing h1 into the container
+    const title = chatHeader.querySelector('h1');
+    chatHeader.removeChild(title);
+    headerContainer.appendChild(title);
+
+    // Create the clear button
     const clearButton = document.createElement('button');
     clearButton.innerHTML = 'Clear Chat';
-    clearButton.style.marginTop = '10px';
     clearButton.style.padding = '5px 10px';
     clearButton.style.background = '#2d2d2d';
     clearButton.style.color = '#ffffff';
     clearButton.style.border = '1px solid #404040';
     clearButton.style.borderRadius = '5px';
     clearButton.style.cursor = 'pointer';
-    
+
     clearButton.addEventListener('click', () => {
         // Clear session storage and reload page
         sessionStorage.removeItem('chatMessages');
         sessionStorage.removeItem('conversationId');
         location.reload();
     });
-    
-    chatHeader.appendChild(clearButton);
+
+    // Add button to the container
+    headerContainer.appendChild(clearButton);
+
+    // Add the container to the header
+    chatHeader.appendChild(headerContainer);
 });

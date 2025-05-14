@@ -23,6 +23,7 @@ def chat_with_groq(user_input, conversation_history=None):
 3. Suggest optimizations and improvements
 4. Help with debugging and error resolution
 5. Implement design patterns and architectural solutions
+6. Ensure concise and to the point answers
 
 When generating code:
 - Use clear and consistent naming conventions
